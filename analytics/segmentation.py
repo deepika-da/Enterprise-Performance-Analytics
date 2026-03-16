@@ -67,6 +67,15 @@ class CustomerSegmentation:
         return rfm
     
 
+segmentation_engine = CustomerSegmentation()
 
+def segment_customers(fact):
+    
+    rfm, centroids = segmentation_engine.segment_customers(fact)
+    rfm = segmentation_engine.label_segments(rfm)
+
+    print("Customer segmentation completed!")
+
+    return rfm, centroids
         
 

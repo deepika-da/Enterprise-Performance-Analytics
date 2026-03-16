@@ -59,3 +59,19 @@ class statistical_analysis:
         stats = fact.describe()
         stats.to_csv(output_path)
         return f"Report saved to {output_path}"
+    
+stats_engine = statistical_analysis()
+
+def sales_statistics(fact):
+
+    correlation_matrix = stats_engine.correlation(fact)
+    trend = stats_engine.revenue_trend(fact)
+    descriptive = stats_engine.descriptive_stats(fact)
+
+    print("Statistical analysis completed!")
+
+    return {
+        "correlation": correlation_matrix,
+        "revenue_trend": trend,
+        "descriptive_stats": descriptive
+    }    

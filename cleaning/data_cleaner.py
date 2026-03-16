@@ -21,7 +21,7 @@ class DataCleaner:
         print(f"Duplicates removed: {before - after}")
         return df
 
-    def convert_types(self, df):
+    def convert_types(self, df):        
         if "order_date" in df.columns:
             df["order_date"] = pd.to_datetime(df["order_date"])
 

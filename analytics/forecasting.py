@@ -24,12 +24,23 @@ class SalesForecasting:
         smoothed = self.exponential_smoothing(series, alpha)
         return smoothed.iloc[-1]
     
-    def forecast_next(self, series, alpha=0.3):
-        smoothed = self.exponential_smoothing(series, alpha)
-        return smoothed.iloc[-1]
-    
     def compare_forecast(self, monthly_data, window =3, alpha=0.3):
         monthly_data = monthly_data.copy()
         monthly_data['moving_avg'] = self.moving_average(monthly_data['revenue'], window)
         monthly_data['exp_smoothing'] = self.exponential_smoothing(monthly_data['revenue'],alpha)
         return monthly_data
+    
+
+forecast_engine = SalesForecasting()
+
+def forecast_sales(fact):
+
+    monthly = forecast_engine.prepare_monthly_data(fact)
+
+    forecast_value = forecast_engine.forecast_next(monthly['revenue'])
+
+    comparison = forecast_engine.compare_forecast(monthly)
+
+    print("Sales forecasting completed!")
+
+    return forecast_value, comparison

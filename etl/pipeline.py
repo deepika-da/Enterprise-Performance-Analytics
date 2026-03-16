@@ -1,10 +1,25 @@
 import os
+
 from ingestion.ingest import ingest_data
 from cleaning.data_cleaner import DataCleaner
 from warehouse.star_schema import star_schema
 
+# analytics modules
+from analytics.kpi_engine import calculate_kpis
+from analytics.segmentation import segment_customers
+from analytics.forecasting import forecast_sales
+from analytics.statistical_analysis import sales_statistics
+
+# visualization
+from visualization.dashboard import create_dashboard
+
+# reporting
+from reporting.report_generator import ReportGenerator
+
 
 def run_pipeline():
+
+    print("===== Enterprise Performance Analytics Pipeline =====")
 
     # Step 1: Ingest
     df = ingest_data()
@@ -23,7 +38,7 @@ def run_pipeline():
 
     print("Star schema created successfully!")
 
-    # Step 4: Save to CSV
+    # Step 4: Save to Warehouse
     output_path = "data/warehouse"
     os.makedirs(output_path, exist_ok=True)
 
@@ -34,4 +49,42 @@ def run_pipeline():
     dim_location.to_csv(os.path.join(output_path, "dim_location.csv"), index=False)
 
     print("Fact and Dimension tables saved successfully!")
-    print("ETL Pipeline completed successfully!")
+
+    # Step 5: Analytics
+    kpi = calculate_kpis(fact_sales, dim_customer, dim_product)
+    segmentation_df, centroids = segment_customers(fact_sales)
+    stats = sales_statistics(fact_sales)
+
+    print("Analytics modules executed!")
+
+    # Step 6: Forecasting
+    forecast_value, forecast_df = forecast_sales(fact_sales)
+    monthly_data = forecast_df[['year_month','revenue']]
+    print("Forecasting completed!")
+    
+    # Step 7: Visualization
+
+    fact_with_region = fact_sales.merge(
+        dim_customer[['customer_id', 'region']],
+        on='customer_id',
+        how='left'
+    )
+
+    create_dashboard(
+        fact_sales,
+        kpi=kpi,
+        segmentation=segmentation_df,
+        forecast=forecast_df,
+        region_data=fact_with_region
+    )
+
+    
+    print("Dashboard generated!")
+
+    # Step 8: Reporting
+    report = ReportGenerator(kpi, monthly_data, segmentation_df, forecast_df)
+    report.generate()
+
+    print("Report generated successfully!")
+
+    print("Enterprise Analytics Pipeline Completed Successfully!")

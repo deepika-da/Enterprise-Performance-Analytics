@@ -1,143 +1,324 @@
-# Enterprise Performance Analytics
+# Enterprise Performance Analytics Platform
 
 ## Overview
 
-Enterprise Performance Analytics is a Python-based analytics solution
-designed to automate business performance reporting. The system
-processes business data, performs analytical computations, and generates
-a structured multi-sheet Excel report containing key insights.
+The **Enterprise Performance Analytics Platform** is an end-to-end data
+analytics project designed to simulate how enterprises process raw
+business data into meaningful insights.
 
-This project demonstrates how data analysts can build an automated
-reporting pipeline using Python for KPI monitoring, revenue analysis,
-customer segmentation, and forecasting.
+This project implements a **complete analytics pipeline**, including:
 
-------------------------------------------------------------------------
+-   Data ingestion
+-   Data cleaning
+-   ETL processing
+-   Data warehousing using a **Star Schema**
+-   KPI and statistical analysis
+-   Forecasting and segmentation
+-   Data visualization
+-   Automated report generation
+-   Unit testing
 
-## Key Features
-
--   **KPI Summary**
-    -   Automatically generates business KPI metrics in a structured
-        summary table.
--   **Revenue Trend Analysis**
-    -   Analyzes monthly revenue performance.
-    -   Calculates moving averages for trend identification.
--   **Customer Segmentation**
-    -   Segments customers based on defined business attributes.
-    -   Helps identify high-value customer groups.
--   **Forecast Analysis**
-    -   Implements forecasting techniques such as:
-        -   Moving Average
-        -   Exponential Smoothing
--   **Automated Excel Report Generation**
-    -   Generates a multi-sheet Excel report for business stakeholders.
+The pipeline processes sales data and produces **analytics dashboards,
+charts, and an automated Excel report**.
 
 ------------------------------------------------------------------------
 
-## Tech Stack
+# Project Architecture
 
-**Programming Language** - Python
-
-**Libraries** - Pandas - NumPy - Matplotlib - OpenPyXL
-
-**Tools** - VS Code - Git & GitHub - Excel
-
-------------------------------------------------------------------------
-
-## Project Structure
-
-    Enterprise-Performance-Analytics
+    Enterprise Performance Analytics
     │
-    ├── analysis
-    │   ├── revenue_analysis.py
+    ├── main.py
+    ├── README.md
+    ├── requirements.txt
+    │
+    ├── ingestion
+    │   └── ingest.py
+    │
+    ├── cleaning
+    │   └── data_cleaner.py
+    │
+    ├── etl
+    │   └── pipeline.py
+    │
+    ├── warehouse
+    │   └── star_schema.py
+    │
+    ├── analytics
+    │   ├── kpi_engine.py
     │   ├── segmentation.py
-    │   └── forecasting.py
+    │   ├── forecasting.py
+    │   └── statistical_analysis.py
+    │
+    ├── visualization
+    │   └── dashboard.py
     │
     ├── reporting
     │   └── report_generator.py
     │
-    ├── data
-    │   └── reports
-    │       └── analytics_report.xlsx
+    ├── tests
+    │   ├── test.dashboard.py
+    │   ├── test.forecasting.py
+    │   ├── test.kpi.py
+    │   ├── test.segmentation.py
+    │   ├── test.stats.py
+    │   └── test_report.py
     │
-    ├── test_report.py
-    ├── requirements.txt
-    └── README.md
+    └── data
+        ├── warehouse
+        │   ├── fact_sales.csv
+        │   ├── dim_customer.csv
+        │   ├── dim_product.csv
+        │   ├── dim_location.csv
+        │   └── dim_time.csv
+        │
+        └── reports
+            ├── analytics_report.xlsx
+            ├── revenue_trend.png
+            ├── segmentation_chart.png
+            ├── kpi_chart.png
+            ├── forecast_chart.png
+            └── region_heatmap.png
 
 ------------------------------------------------------------------------
 
-## Output
+# Data Pipeline Workflow
 
-The system generates an Excel report containing the following sheets:
+The platform follows a **modular enterprise analytics pipeline**.
 
--   KPI_Summary
--   Revenue_trend_Analysis
--   Customer_Segmentation
--   Forecast_Analysis
+## 1. Data Ingestion
 
-Each sheet provides structured analytical insights for business
-performance monitoring.
+Module: `ingestion/ingest.py`
+
+Responsible for loading raw datasets into the system.
+
+Key responsibilities:
+
+-   Load raw sales data
+-   Convert data into structured DataFrame
+-   Perform initial validation
 
 ------------------------------------------------------------------------
 
-## How to Run the Project
+## 2. Data Cleaning
 
-### 1. Clone the Repository
+Module: `cleaning/data_cleaner.py`
 
-    git clone https://github.com/deepika-da/Enterprise-Performance-Analytics.git
+Prepares raw data for analysis.
 
-### 2. Install Dependencies
+Processes include:
 
-    pip install -r requirements.txt
+-   Handling missing values
+-   Removing duplicates
+-   Fixing inconsistent formats
+-   Standardizing columns
 
-### 3. Run the Report Generation Script
+------------------------------------------------------------------------
 
-    python test_report.py
+## 3. ETL Pipeline
 
-### 4. Generated Output
+Module: `etl/pipeline.py`
 
-The Excel report will be saved in:
+Transforms cleaned data into structured analytical datasets.
+
+Key processes:
+
+-   Data transformation
+-   Feature engineering
+-   Data aggregation
+-   Preparing warehouse-ready datasets
+
+------------------------------------------------------------------------
+
+## 4. Data Warehouse (Star Schema)
+
+Module: `warehouse/star_schema.py`
+
+Implements a **Star Schema model** used in analytics systems.
+
+Fact Table
+
+-   `fact_sales.csv`
+
+Dimension Tables
+
+-   `dim_customer.csv`
+-   `dim_product.csv`
+-   `dim_location.csv`
+-   `dim_time.csv`
+
+This structure supports efficient analytics queries.
+
+------------------------------------------------------------------------
+
+# Analytics Engine
+
+Located in the `analytics` module.
+
+## KPI Engine
+
+File: `kpi_engine.py`
+
+Calculates key business metrics such as:
+
+-   Total Revenue
+-   Total Orders
+-   Average Order Value
+-   Customer Performance
+
+------------------------------------------------------------------------
+
+## Customer Segmentation
+
+File: `segmentation.py`
+
+Segments customers based on purchasing behavior:
+
+-   High Value Customers
+-   Medium Value Customers
+-   Low Value Customers
+
+------------------------------------------------------------------------
+
+## Forecasting
+
+File: `forecasting.py`
+
+Predicts future sales trends using historical data.
+
+------------------------------------------------------------------------
+
+## Statistical Analysis
+
+File: `statistical_analysis.py`
+
+Performs deeper analytical insights using statistical techniques.
+
+------------------------------------------------------------------------
+
+# Data Visualization
+
+Module: `visualization/dashboard.py`
+
+Generates visual insights including:
+
+-   Revenue trend charts
+-   Customer segmentation charts
+-   KPI visualizations
+-   Regional heatmaps
+-   Forecast charts
+
+Generated charts are saved in:
+
+    data/reports/
+
+------------------------------------------------------------------------
+
+# Automated Reporting
+
+Module: `reporting/report_generator.py`
+
+Creates an **Excel analytics report** containing:
+
+-   KPI Summary
+-   Sales Trends
+-   Customer Segmentation
+-   Forecast Results
+-   Embedded visualizations
+
+Output:
 
     data/reports/analytics_report.xlsx
 
 ------------------------------------------------------------------------
 
-## Business Use Case
+# Testing
 
-Organizations need automated systems to monitor operational and
-financial performance. This project demonstrates how Python can be used
-to automate business analytics reporting workflows.
+The project includes a **testing suite** to validate analytics modules.
 
-Possible applications include:
+Located in:
 
--   Sales Performance Monitoring
--   Business KPI Reporting
--   Revenue Trend Analysis
--   Customer Segmentation Analysis
--   Forecasting Business Metrics
+    tests/
 
-------------------------------------------------------------------------
+Test coverage includes:
 
-## Future Improvements
-
--   Interactive dashboards using Power BI or Tableau
--   Advanced forecasting models
--   Automated scheduling of report generation
--   Integration with databases
+-   KPI calculations
+-   Forecasting logic
+-   Segmentation accuracy
+-   Dashboard generation
+-   Reporting functionality
 
 ------------------------------------------------------------------------
 
-## Author
+# Technologies Used
 
-**Deepika K**
-
-Aspiring Data Analyst with experience in: - SQL - Power BI - Python
-(Pandas, NumPy) - Advanced Excel - Tableau
-
-Interested in building data-driven solutions that help businesses make
-informed decisions.
+  Technology     Purpose
+  -------------- ------------------------
+  Python         Core programming
+  Pandas         Data processing
+  NumPy          Numerical computations
+  Matplotlib     Data visualization
+  Excel          Final reporting
+  PyTest         Unit testing
+  Git & GitHub   Version control
 
 ------------------------------------------------------------------------
 
-## Connect With Me
+# How to Run the Project
 
-GitHub: https://github.com/deepika-da
+## 1 Clone Repository
+
+``` bash
+git clone https://github.com/yourusername/Enterprise-Performance-Analytics.git
+```
+
+------------------------------------------------------------------------
+
+## 2 Navigate to Project
+
+``` bash
+cd Enterprise-Performance-Analytics
+```
+
+------------------------------------------------------------------------
+
+## 3 Install Dependencies
+
+``` bash
+pip install -r requirements.txt
+```
+
+------------------------------------------------------------------------
+
+## 4 Run the Pipeline
+
+``` bash
+python -m main
+```
+
+------------------------------------------------------------------------
+
+# Output
+
+After execution, the system generates:
+
+### Excel Report
+
+    data/reports/analytics_report.xlsx
+
+### Visualization Charts
+
+-   Revenue Trend
+-   KPI Chart
+-   Customer Segmentation
+-   Forecast Chart
+-   Regional Heatmap
+
+------------------------------------------------------------------------
+
+# Author
+
+**Deepika K**\
+Data Analyst
+
+Skills: - SQL - Power BI - Python (Pandas, NumPy) - Advanced Excel -
+Tableau
